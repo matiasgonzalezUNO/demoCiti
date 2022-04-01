@@ -53,9 +53,7 @@ public class UsuarioModel {
 		this.prioridad = prioridad;
 	}
 	
-	//Otros datos
-	
-	
+	//Otros datos	
 	public TipoDocumentoModel getTipoDocumento() {
 		return tipoDocumento;
 	}
