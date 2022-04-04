@@ -16,6 +16,7 @@ import com.example.demoMiddleware.repositories.ConversionDocumentoRepository;
 import com.example.demoMiddleware.repositories.TipoDocumentoRepository;
 import com.example.demoMiddleware.repositories.UsuarioRepository;
 
+//TODO: Mover a middleware
 
 @Service
 public class ConsultaService {
@@ -54,16 +55,21 @@ public class ConsultaService {
         tipoDocRequest = request.getTipoDocumento();
         numeroDocRequest = request.getNumeroDocumento();
         
-        
+
+// -----------------------------------------------------------------------------------------------------------------------------
 //      Traducción (simula busqueda de datos en cache para la traducción)
         System.out.println("respuesta");
         System.out.println("request.getTipoDocumento() "+tipoDocRequest);
+        
+        //ESTO ES LA MEMORIA CACHE O ARCHIVO
         tipoDocConversion = conversionDocumentoRepository.findByIdFrontEnd(tipoDocRequest);
+        
         System.out.println("tipoDoc id_back "+ tipoDocConversion.get(0).getIdBackEnd());
         System.out.println("tipoDoc id_front "+ tipoDocConversion.get(0).getIdFrontEnd());       
         
+     
+//      Armo request del back y lo envío
         
-//      Armo request del back y lo envío 
         tipoDocumento = tipoDocumentoRepository.findById(tipoDocConversion.get(0).getIdBackEnd());
         System.out.println("tipoDocumento: "+tipoDocumento);
         if(!tipoDocumento.isEmpty()) {       	      	 
@@ -82,7 +88,9 @@ public class ConsultaService {
         //Reemplazamos las comas
         aux = aux.replace(".",",");
 
-      
+// -----------------------------------------------------------------------------------------------------------------------------
+
+
 //      Armamos el response para el front
         if(!usuario.isEmpty()) {
         	System.out.println("usuario: "+usuario.get(0));
