@@ -68,7 +68,7 @@ public class ConsultaService {
         System.out.println("tipoDocumento: "+tipoDocumento);
         if(!tipoDocumento.isEmpty()) {       	      	 
         //clase para simular el back-end        	 
-        	 usuario = backEndService.obtenerSaldoDesdeElBack(tipoDocumento, request.getNumeroDocumento());
+        	 usuario = backEndService.obtenerSaldoDesdeElBack(tipoDocumento, numeroDocRequest);
         }
         
 
