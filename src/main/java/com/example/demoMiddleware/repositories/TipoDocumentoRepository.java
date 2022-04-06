@@ -5,7 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demoMiddleware.models.TipoDocumentoModel;
 
+
 @Repository
 public interface TipoDocumentoRepository extends CrudRepository<TipoDocumentoModel, Long>{
 
+	public abstract TipoDocumentoModel findByNombre(String nombre);
 }

@@ -38,6 +38,17 @@ public class TipoDocumentoModel {
 		this.descripcion = descripcion;
 	}
 	
+	
+	
+	public TipoDocumentoModel(String nombre, String descripcion) {	
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+	}
+	
+	public TipoDocumentoModel() {
+		
+	}
+	
 	@Override
 	public String toString() {
 		return "TipoDocumentoModel [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";

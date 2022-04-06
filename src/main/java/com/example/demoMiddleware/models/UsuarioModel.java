@@ -53,9 +53,7 @@ public class UsuarioModel {
 		this.prioridad = prioridad;
 	}
 	
-	//Otros datos
-	
-	
+	//Otros datos	
 	public TipoDocumentoModel getTipoDocumento() {
 		return tipoDocumento;
 	}
@@ -81,6 +79,20 @@ public class UsuarioModel {
 		this.monto = monto;
 	}
 	
+	
+	public UsuarioModel() {
+		
+	}
+	public UsuarioModel(String nombre, String email, Integer prioridad, TipoDocumentoModel tipoDocumento,
+			Integer numeroDocumento, Long numeroCuentaBancaria, Integer monto) {
+		this.nombre = nombre;
+		this.email = email;
+		this.prioridad = prioridad;
+		this.tipoDocumento = tipoDocumento;
+		this.numeroDocumento = numeroDocumento;
+		this.numeroCuentaBancaria = numeroCuentaBancaria;
+		this.monto = monto;
+	}
 	@Override
 	public String toString() {
 		return "UsuarioModel [id=" + id + ", nombre=" + nombre + ", email=" + email + ", prioridad=" + prioridad

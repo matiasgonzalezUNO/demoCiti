@@ -34,30 +34,32 @@ public class ConsultaService {
 	public ResponseModel obtenerSaldo(RequestModel request) {		
 		
 //		Validación
-		if( !(request.getNumeroDocumento() == null) && !(request.getTipoDocumento() == null) ) {
-			
-		}
+		
 		ArrayList<ConversionDocumentoModel> tipoDocConversion = new ArrayList<ConversionDocumentoModel>();
 		ArrayList<UsuarioModel> usuario = new ArrayList<UsuarioModel>();
 		Optional<TipoDocumentoModel> tipoDocumento = Optional.ofNullable(new TipoDocumentoModel());
 		ResponseModel respuesta = new ResponseModel();
 		Long tipoDocRequest;
-        respuesta.setSaldoActual("0,00");
+		Integer numeroDocRequest;
+        respuesta.setSaldoActual("0,000");
         respuesta.setCode(400);
         respuesta.setStatus(false);
-        respuesta.setDescripcion("Error 400: se ha producido un error inesperado");       
+        respuesta.setDescripcion("Error 400: se ha producido un error inesperado");     
         
-        tipoDocRequest = request.getTipoDocumento();
-        if(tipoDocRequest == null) {
+        if( ( String.valueOf(request.getTipoDocumento() ).equals("") || request.getTipoDocumento()==null )  ||
+        		( String.valueOf(request.getNumeroDocumento() ).equals("") || request.getNumeroDocumento()==null ) )  {
         	return respuesta;
-        }
+		}
+        
+        tipoDocRequest = Long.valueOf(request.getTipoDocumento());
+        numeroDocRequest = request.getNumeroDocumento();
         
         
 //      Traducción (simula busqueda de datos en cache para la traducción)
         System.out.println("respuesta");
         System.out.println("request.getTipoDocumento() "+tipoDocRequest);
         tipoDocConversion = conversionDocumentoRepository.findByIdFrontEnd(tipoDocRequest);
-        System.out.println("tipoDoc id_conver "+ tipoDocConversion.get(0).getId());
+        System.out.println("tipoDocConv tipoDocConversion "+ tipoDocConversion);
         System.out.println("tipoDoc id_back "+ tipoDocConversion.get(0).getIdBackEnd());
         System.out.println("tipoDoc id_front "+ tipoDocConversion.get(0).getIdFrontEnd());       
         
@@ -67,7 +69,7 @@ public class ConsultaService {
         System.out.println("tipoDocumento: "+tipoDocumento);
         if(!tipoDocumento.isEmpty()) {       	      	 
         //clase para simular el back-end        	 
-        	 usuario = backEndService.obtenerSaldoDesdeElBack(tipoDocumento, request.getNumeroDocumento());
+        	 usuario = backEndService.obtenerSaldoDesdeElBack(tipoDocumento, numeroDocRequest);
         }
         
 
@@ -88,7 +90,7 @@ public class ConsultaService {
         	respuesta.setSaldoActual(aux);
             respuesta.setCode(200);
             respuesta.setStatus(true);
-            respuesta.setDescripcion("el saldo del cliente es :");
+            respuesta.setDescripcion("el saldo del cliente es: ");
             return respuesta;
         } else {
         	return respuesta;

@@ -19,6 +19,14 @@ public class ConversionDocumentoModel {
 	private Long idBackEnd;
 	
 	
+	public ConversionDocumentoModel() {
+		
+	}
+	public ConversionDocumentoModel(Long front, Long back) {
+		this.idFrontEnd = front;
+        this.idBackEnd = back;
+	}
+	
 	public Long getId() {
 		return id;
 	}
