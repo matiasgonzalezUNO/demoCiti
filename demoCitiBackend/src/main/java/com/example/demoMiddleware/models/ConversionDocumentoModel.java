@@ -8,29 +8,33 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "conversionDocumentos")
+@Table(name = "CONVERSION_DOCUMENTOS")
 public class ConversionDocumentoModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(unique = true, nullable = false)
-	private Long id;
+	@Column(unique = true, nullable = false, name="ID_CONVERSION_DOCUMENTOS")
+	private Long idConversionDocumentos;
+	@Column(name="ID_FRONT_END")
 	private Long idFrontEnd;
+	@Column(name="ID_BACK_END")
 	private Long idBackEnd;
 	
 	
 	public Long getId() {
-		return id;
+		return idConversionDocumentos;
 	}
-	public void setId(Long id) {
-		this.id = id;
+	public void setId(Long idConversionDocumentos) {
+		this.idConversionDocumentos = idConversionDocumentos;
 	}
+	
 	public Long getIdFrontEnd() {
 		return idFrontEnd;
 	}
 	public void setIdFrontEnd(Long idFrontEnd) {
 		this.idFrontEnd = idFrontEnd;
 	}
+	
 	public Long getIdBackEnd() {
 		return idBackEnd;
 	}

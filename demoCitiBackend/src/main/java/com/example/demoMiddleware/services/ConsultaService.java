@@ -16,7 +16,6 @@ import com.example.demoMiddleware.repositories.ConversionDocumentoRepository;
 import com.example.demoMiddleware.repositories.TipoDocumentoRepository;
 import com.example.demoMiddleware.repositories.UsuarioRepository;
 
-//TODO: Mover a middleware
 
 @Service
 public class ConsultaService {
@@ -34,53 +33,59 @@ public class ConsultaService {
 	
 	public ResponseModel obtenerSaldo(RequestModel request) {		
 		
-//		Validación
+		//	Validación
+		//Creo una coleccion de los models
+		ArrayList<ConversionDocumentoModel> tipoDocConversion;
+		ArrayList<UsuarioModel> usuario = new ArrayList<>();
 		
-		ArrayList<ConversionDocumentoModel> tipoDocConversion = new ArrayList<ConversionDocumentoModel>();
-		ArrayList<UsuarioModel> usuario = new ArrayList<UsuarioModel>();
+		//Optional, es opcional, ya que puede estar o no. Sirve para que los arrays no devuelvan el error
 		Optional<TipoDocumentoModel> tipoDocumento = Optional.ofNullable(new TipoDocumentoModel());
+		// 3 - Armado de respuesta
 		ResponseModel respuesta = new ResponseModel();
 		Long tipoDocRequest;
 		Integer numeroDocRequest;
+		
+		// Se instancia una respuesta por defecto, ya que, en caso de que tenga un error devuelva este mensaje.
         respuesta.setSaldoActual("0,000");
         respuesta.setCode(400);
         respuesta.setStatus(false);
         respuesta.setDescripcion("Error 400: se ha producido un error inesperado");     
         
+        // Validacion de datos que no sean nulos desde el Front-End
         if( ( String.valueOf(request.getTipoDocumento() ).equals("") || request.getTipoDocumento()==null )  ||
         		( String.valueOf(request.getNumeroDocumento() ).equals("") || request.getNumeroDocumento()==null ) )  {
         	return respuesta;
 		}
         
+        // 
         tipoDocRequest = request.getTipoDocumento();
         numeroDocRequest = request.getNumeroDocumento();
         
 
-// -----------------------------------------------------------------------------------------------------------------------------
-//      Traducción (simula busqueda de datos en cache para la traducción)
+		// -----------------------------------------------------------------------------------------------------------------------------
+		// Traducción (simula busqueda de datos en cache para la traducción)
         System.out.println("respuesta");
         System.out.println("request.getTipoDocumento() "+tipoDocRequest);
         
         //ESTO ES LA MEMORIA CACHE O ARCHIVO
+        //4 - Aca se realiza la transformacion del tipo de documento
         tipoDocConversion = conversionDocumentoRepository.findByIdFrontEnd(tipoDocRequest);
         
         System.out.println("tipoDoc id_back "+ tipoDocConversion.get(0).getIdBackEnd());
         System.out.println("tipoDoc id_front "+ tipoDocConversion.get(0).getIdFrontEnd());       
         
      
-//      Armo request del back y lo envío
-        
+        //Armo request del back y lo envío
         tipoDocumento = tipoDocumentoRepository.findById(tipoDocConversion.get(0).getIdBackEnd());
         System.out.println("tipoDocumento: "+tipoDocumento);
         if(!tipoDocumento.isEmpty()) {       	      	 
-        //clase para simular el back-end        	 
+        	 //5- Obtengo los datos del usuario
         	 usuario = backEndService.obtenerSaldoDesdeElBack(tipoDocumento, request.getNumeroDocumento());
         }
-        
 
         
-//      Traducción de datos para el response del front
-        usuario.get(0).setMonto(usuario.get(0).getMonto()*10);
+        //6- Traducción de datos para el response del front
+        usuario.get(0).setMonto(usuario.get(0).getMonto());
         double d = usuario.get(0).getMonto();
         DecimalFormat format = new DecimalFormat("0.000");
         //Obtenemos el valor formateado

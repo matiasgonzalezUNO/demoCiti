@@ -20,6 +20,7 @@ public class ConsultaController {
 	@Autowired
 	ConsultaService consultaService;
 	
+	//2- Endpoint expuesto para realizar pedido
 	@GetMapping( path = "/obtenerSaldo")
 	public @ResponseBody ResponseModel ObtenerSaldo(@RequestBody RequestModel request) {
 		return consultaService.obtenerSaldo(request);
